@@ -1,10 +1,43 @@
 <script src="http://code.jquery.com/jquery-1.4.2.js"></script>
 <script>
+    var feedUrls = [];
+    var feedCache = [];
+    chrome.browserAction.onClicked.addListener(function (tab) {
+        refreshRSS();
+    });
     function onRequest(request, sender, callback) {
         if (request.action == 'getJSON') {
-            $.getJSON(request.url, callback);
+            var index = -1;
+            for (var i in feedUrls) {
+                if (feedUrls[i]==request.url) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) {
+               
+                feedUrls.push(request.url);                
+                $.getJSON(request.url, function (data) {
+                    console.log("Get Fresh RSS");
+                    feedCache.push(data);  
+                    callback(data);
+                });
+            } else {
+                console.log("Get Cached RSS");
+                return callback(feedCache[i]);
+                
+            }
         }
     }
-
+    window.setInterval("refreshRSS()", 1000*60*10);
     chrome.extension.onRequest.addListener(onRequest);
+    function  refreshRSS() {
+        console.log("refesh RSS of " + feedUrls.length);
+        for (var i in feedUrls) { 
+             $.getJSON(feedUrls[i], function (data) {
+                    console.log("Update RSS " + feedUrls[i]);
+                    feedCache[i] = data;  
+             });
+        }        
+    }
 </script>
