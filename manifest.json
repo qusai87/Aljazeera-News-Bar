@@ -1,0 +1,24 @@
+{
+  "name": "Aljazeera News Bar",
+  "version": "1.1",
+  "icons": { "16": "Aljazeera.ico",
+           "48": "Aljazeera.ico",
+          "128": "Aljazeera.png" },
+  "background_page": "background.html",
+  "permissions": [	
+    "http://ajax.googleapis.com/*","tabs", "*://*/*"
+  ],
+  "browser_action": {
+	"default_icon": "Aljazeera.png",
+	"name": "refresh",
+	"icons": ["Aljazeera.png"]
+	
+  },
+   "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": ["topBar.css"],
+      "js": ["jquery.js", "CrossDomainAjax.js", "xml2json.js", "Rss.js","ticker.js","NewsBar.js"]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://dev.jquery.com/view/tags/ui/latest/ui/effects.core.js"></script> 
+    <script src="http://dev.jquery.com/view/tags/ui/latest/ui/effects.highlight.js"></script> 
+
+<script src="CrossDomainAjax.js"></script>
+
+<script>
+    $(function() {
+    getHTMLAjax('http://www.aljazeera.net/AljazeeraRss/Rss.aspx?URL=RSS-Arabic.xml', onComplete);
+    });
+    function onComplete(data) {
+        if (data) {
+            alert(data);
+               $("#container").text(data).focus().effect("highlight", {}, 1000);
+        }
+    }
+</script>
+<div id="container"></div>
