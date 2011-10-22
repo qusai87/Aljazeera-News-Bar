@@ -1,0 +1,10 @@
+<script src="http://code.jquery.com/jquery-1.4.2.js"></script>
+<script>
+    function onRequest(request, sender, callback) {
+        if (request.action == 'getJSON') {
+            $.getJSON(request.url, callback);
+        }
+    }
+
+    chrome.extension.onRequest.addListener(onRequest);
+</script>
